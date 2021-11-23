@@ -1,0 +1,91 @@
+1. Список ставок данного пользователя:
+
+SELECT `bids`.`bid_id`
+FROM `internetauction`.`bids` where users_user_id=2;
+
+2. Список лотов данного пользователя:
+
+SELECT `items`.`_id`,
+    `items`.`title`,
+    `items`.`description`,
+    `items`.`start_price`
+FROM `internetauction`.`items`where users_user_id=2;
+
+3. Поиск лотов по подстроке в названии:
+
+SELECT `items`.`_id` ,	`items`.`title`  
+FROM `internetauction`.`items` where  `items`.`title` like '%prin%'
+
+4. Поиск лотов по подстроке в описании:
+
+SELECT `items`.`_id` ,	`items`.`title`, `items`.`description`   
+FROM `internetauction`.`items` where  `items`.`description` like '%dell%'
+
+5. Средняя цена лотов каждого пользователя:
+
+SELECT AVG (`items`.`start_price`) ,	`items`.`title`  
+FROM `internetauction`.`items` where  `items`.users_user_id='2'
+
+6. Максимальный размер имеющихся ставок на каждый лот:
+
+SELECT `bids`.`items_item_id`, COUNT(*) AS items_count , MAX(bid_value)
+FROM `internetauction`.`bids` 
+GROUP BY `bids`.`items_item_id` ;
+
+7. Список действующих лотов данного пользователя:
+
+SELECT `items`.`_id`,
+    `items`.`title`,
+    `items`.`description`,
+    `items`.`start_price`,
+    `items`.`bid_increment`,
+    `items`.`start_date`,
+    `items`.`stop_date`,
+    `items`.`by_it_now`,
+    `items`.`users_user_id`
+FROM `internetauction`.`items` WHERE `items`.`users_user_id`=2 AND stop_date <= '2021-11-24' ;
+
+8. Добавить нового пользователя:
+
+INSERT INTO `internetauction`.`users`
+(`user_id`,
+`full_name`,
+`billing_address`,
+`login`,
+`password`)
+VALUES
+('5', 'Anna', 'Lenina,54,23', 'annushka', 'ieuroiww');
+
+9. Добавить новый лот:
+
+INSERT INTO `internetauction`.`items`
+(`item_id`,
+`title`,
+`description`,
+`start_price`,
+`bid_increment`,
+`start_date`,
+`stop_date`,
+`by_it_now`,
+`users_user_id`)
+VALUES
+('4','car', 'Mercedes, slx, turbo', '1230500', '100000', '2021-11-22', '2021-11-30', '1', '3');
+
+10. Удалить ставки данного пользователя:
+
+DELETE FROM bids
+WHERE users_user_id = '2';
+
+11. Удалить лоты данного пользователя:
+
+DELETE FROM items
+WHERE users_user_id = '4';
+
+12. Увеличить стартовые цены товаров данного пользователя вдвое:
+
+UPDATE `internetauction`.`items`
+SET start_price = start_price* 2
+WHERE users_user_id = 2;
+
+
+
